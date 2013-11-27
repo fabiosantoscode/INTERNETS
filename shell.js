@@ -1,13 +1,27 @@
 var common = require('./common');
 var path = require('path');
 var fs = require('fs');
+var q = require('q');
 var EventEmitter = require('events').EventEmitter;
-
-common.speak('Hello! This is INTERNET\'s');
 
 var events = new EventEmitter();
 var programEvents = new EventEmitter();
 
-var programs = fs.readdirSync(path.join(__dirname, 'programs')).map(require);
 
+var apis = require('./apis');
 
+function nextProgram(cb) {
+    cb(require('./programs/notes'));
+}
+
+function mainLoop() {
+    common.speak('INTERNET\'s', function () {
+        nextProgram(function (program) {
+            program.main(apis, function () {
+                mainLoop();
+            })
+        });
+    });
+}
+
+mainLoop();

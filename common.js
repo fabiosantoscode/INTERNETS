@@ -23,7 +23,7 @@ function playFile(fileName, cb) {
 /**
  * Record to a file, given filename. Returns a callback so you can say when you're done.
  */
-function _recordToFile(fileName, cb) {
+function recordToFile(fileName, cb) {
     var recorder = child_process.spawn('arecord', [
         '-r', '48000', fileName]);
     recorder.on('exit', function () {
