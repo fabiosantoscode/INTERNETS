@@ -1,12 +1,14 @@
 
 module.exports = {
     label: 'notes',
-    main: function (api, restOfSystem) {
-        api.speak('Welcome to notes', function () {
-            api.speak('Right now this program only consists of randomly speaking stuffs', function () {
-                api.speak('And now it ends and gives control to the shell', restOfSystem);
+    main: function (api) {
+        return api.io.speak('Welcome to notes')
+            .then(function () {
+                return api.io.speak('Right now this program only consists of randomly speaking stuffs');
+            })
+            .then(function () {
+                return api.io.speak('And now it ends and gives control to the shell');
             });
-        });
     }
 }
 
