@@ -15,7 +15,7 @@ function nextProgram(cb) {
 }
 
 function mainLoop() {
-    common.speak('INTERNET\'s', function () {
+    common.speak('internet\'s', function () {
         nextProgram(function (program) {
             program.main(apis, function () {
                 mainLoop();
