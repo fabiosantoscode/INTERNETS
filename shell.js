@@ -10,18 +10,20 @@ var programEvents = new EventEmitter();
 
 var apis = require('./apis');
 
-function nextProgram(cb) {
-    cb(require('./programs/notes'));
+function promptUserForProgram() {
+    return common.speak('choose a program')
+        .then(function () {
+            return require('./programs/notes');
+        });
 }
 
 function mainLoop() {
-    common.speak('internet\'s', function () {
-        nextProgram(function (program) {
-            program.main(apis, function () {
-                mainLoop();
-            })
-        });
-    });
+    return common.speak('internets\'s')
+        .then(promptUserForProgram)
+        .then(function (program) {
+            return program.main(apis)
+        })
+        .then(mainLoop)
 }
 
 mainLoop();

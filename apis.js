@@ -1,5 +1,8 @@
 var common = require('./common');
 var underscore = require('underscore');
+var q = require('q');
 
-module.exports = underscore.extend({}, common);
+module.exports.io = common
+module.exports.underscore = underscore;
+module.exports.q = q;
 
