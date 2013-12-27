@@ -23,7 +23,10 @@ function speak(text) {
 function playFile(fileName) {
     var mplayer = child_process.spawn('mplayer', [fileName]);
     var deferred = q.defer();
-    mplayer.on('exit', function () {
+    mplayer.on('exit', function (errCode) {
+        if (errCode !== 0) {
+            return deferred.reject(new Error('mplayer exited with non-zero exit code ' + errCode));
+        }
         deferred.resolve();
     });
     return deferred.promise;

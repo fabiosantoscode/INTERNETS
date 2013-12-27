@@ -12,8 +12,14 @@ var apis = require('./apis');
 function promptUserForProgram() {
     return io.speak('choose a program')
         .then(function () {
+            // For now...
             return require('./programs/notes');
         });
+}
+
+function ggkthxbai() {
+    console.error('Was not able to speak. Bye!');
+    process.exit(1);
 }
 
 function runProgram(program) {
@@ -22,12 +28,11 @@ function runProgram(program) {
             var err = 'program ' + program.label + ' failed: ' + err;
 	    console.log(err);
 	    return apis.io.speak(err);
-        })
-	.fail(function () { console.log('Was not able to speak. Bye!'); });
+        });
 }
 
 function mainLoop() {
-    return io.speak('internets\'s')
+    return io.speak('internets\'s').fail(ggkthxbai)
         .then(promptUserForProgram)
         .then(runProgram)
         .finally(mainLoop)
