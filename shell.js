@@ -1,5 +1,5 @@
-var common = require('./common');
 var path = require('path');
+var io = require('./io');
 var fs = require('fs');
 var q = require('q');
 var EventEmitter = require('events').EventEmitter;
@@ -10,7 +10,7 @@ var programEvents = new EventEmitter();
 var apis = require('./apis');
 
 function promptUserForProgram() {
-    return common.speak('choose a program')
+    return io.speak('choose a program')
         .then(function () {
             return require('./programs/notes');
         });
@@ -27,7 +27,7 @@ function runProgram(program) {
 }
 
 function mainLoop() {
-    return common.speak('internets\'s')
+    return io.speak('internets\'s')
         .then(promptUserForProgram)
         .then(runProgram)
         .finally(mainLoop)
