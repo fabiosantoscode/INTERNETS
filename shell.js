@@ -17,17 +17,17 @@ function promptUserForProgram() {
         });
 }
 
-function ggkthxbai() {
-    console.error('Was not able to speak. Bye!');
+function ggkthxbai(err) {
+    console.error('Was not able to speak (' + err + '). Bye!');
     process.exit(1);
 }
 
 function runProgram(program) {
     return program.main(apis)
         .fail(function (err) {
-            var err = 'program ' + program.label + ' failed: ' + err;
-	    console.log(err);
-	    return apis.io.speak(err);
+            var errMsg = 'program ' + program.label + ' failed: ' + err;
+	    console.error(errMsg);
+	    return apis.io.speak(errMsg).then(err);
         });
 }
 
